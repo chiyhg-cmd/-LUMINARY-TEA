@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Noto+Serif+TC:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --cream:#FAF7F0;--deep-green:#1A3A2A;--sage:#4A7C5F;--gold:#C9A84C;--warm-brown:#6B4226;--light-sage:#E8F0E9;--fog:#F0EDE6;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--deep-green);overflow-x:hidden}
+
+/* NAV */
+nav{position:sticky;top:0;z-index:100;background:rgba(250,247,240,0.95);backdrop-filter:blur(8px);border-bottom:1px solid rgba(74,124,95,0.2);padding:0 3rem;display:flex;align-items:center;justify-content:space-between;height:68px}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--deep-green);letter-spacing:0.05em}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{font-size:0.85rem;color:var(--sage);text-decoration:none;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--deep-green);color:var(--cream);padding:0.5rem 1.25rem;border-radius:2px;font-size:0.8rem;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;border:none;transition:background 0.2s}
+.nav-cta:hover{background:var(--sage)}
+
+/* HERO */
+.hero{min-height:92vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:5rem 4rem;gap:4rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;right:-10%;top:-10%;width:55%;height:120%;background:var(--light-sage);border-radius:60% 0 0 60%;z-index:0;opacity:0.5}
+.hero-text{position:relative;z-index:1}
+.hero-badge{display:inline-block;background:var(--gold);color:var(--deep-green);font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:1px;margin-bottom:1.5rem;font-weight:500}
+.hero-title{font-family:'Playfair Display',serif;font-size:clamp(2.8rem,4.5vw,4.2rem);line-height:1.1;color:var(--deep-green);margin-bottom:1rem}
+.hero-title em{color:var(--sage);font-style:italic}
+.hero-subtitle{font-family:'Noto Serif TC',serif;font-size:1rem;color:var(--warm-brown);line-height:1.8;margin-bottom:2rem;font-weight:300}
+.hero-actions{display:flex;gap:1rem;align-items:center}
+.btn-primary{background:var(--deep-green);color:var(--cream);padding:0.85rem 2rem;border:none;font-size:0.85rem;letter-spacing:0.08em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-primary:hover{background:var(--sage)}
+.btn-outline{background:transparent;color:var(--deep-green);padding:0.85rem 2rem;border:1.5px solid var(--deep-green);font-size:0.85rem;letter-spacing:0.08em;cursor:pointer;text-transform:uppercase;transition:all 0.2s;font-family:'DM Sans',sans-serif}
+.btn-outline:hover{background:var(--deep-green);color:var(--cream)}
+.hero-visual{position:relative;z-index:1;display:flex;align-items:center;justify-content:center}
+
+/* LOGO SVG */
+.logo-svg-large{width:320px;height:320px}
+
+/* STATS */
+.stats{background:var(--deep-green);color:var(--cream);display:grid;grid-template-columns:repeat(4,1fr);padding:3rem 4rem;gap:2rem}
+.stat-item{text-align:center;border-right:1px solid rgba(250,247,240,0.1)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:'Playfair Display',serif;font-size:2.8rem;color:var(--gold);line-height:1}
+.stat-label{font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(250,247,240,0.6);margin-top:0.4rem}
+
+/* BRAND SECTION */
+.section{padding:5rem 4rem}
+.section-badge{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--sage);margin-bottom:0.8rem;font-weight:500}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.6rem);color:var(--deep-green);margin-bottom:1.2rem;line-height:1.2}
+.section-body{font-family:'Noto Serif TC',serif;font-size:0.95rem;color:var(--warm-brown);line-height:1.9;font-weight:300;max-width:55ch}
+
+/* BRAND IDENTITY */
+.brand-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.brand-card{background:var(--fog);padding:2.5rem;border-left:3px solid var(--gold)}
+.brand-card h3{font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--deep-green);margin-bottom:0.8rem}
+.brand-card p{font-size:0.85rem;color:var(--warm-brown);line-height:1.8}
+.color-palette{display:flex;gap:0.5rem;margin-top:1rem}
+.swatch{width:44px;height:44px;border-radius:50%;border:2px solid rgba(0,0,0,0.06)}
+.swatch-label{font-size:0.65rem;letter-spacing:0.05em;color:var(--warm-brown);margin-top:0.3rem;text-align:center}
+
+/* MASCOT */
+.mascot-section{background:var(--light-sage);padding:5rem 4rem;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.mascot-visual{display:flex;justify-content:center}
+
+/* PRODUCTS */
+.products-section{padding:5rem 4rem;background:var(--deep-green)}
+.products-section .section-title{color:var(--cream)}
+.products-section .section-badge{color:var(--gold)}
+.product-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.product-card{background:rgba(250,247,240,0.05);border:1px solid rgba(250,247,240,0.1);padding:2rem;transition:all 0.3s;cursor:pointer;position:relative;overflow:hidden}
+.product-card::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:3px;background:var(--gold);transform:scaleX(0);transition:transform 0.3s}
+.product-card:hover::after{transform:scaleX(1)}
+.product-card:hover{background:rgba(250,247,240,0.08);transform:translateY(-2px)}
+.product-icon{width:64px;height:64px;margin-bottom:1.2rem}
+.product-name{font-family:'Playfair Display',serif;font-size:1.15rem;color:var(--cream);margin-bottom:0.5rem}
+.product-desc{font-size:0.82rem;color:rgba(250,247,240,0.6);line-height:1.7}
+.product-price{font-size:1.2rem;color:var(--gold);margin-top:1rem;font-weight:500}
+
+/* BUSINESS MODEL */
+.biz-section{padding:5rem 4rem}
+.biz-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.2rem;margin-top:3rem}
+.biz-card{padding:1.8rem 2rem;border:1px solid rgba(74,124,95,0.2);position:relative}
+.biz-num{position:absolute;top:1.2rem;right:1.5rem;font-family:'Playfair Display',serif;font-size:3rem;color:var(--light-sage);font-weight:600;line-height:1}
+.biz-title{font-family:'Playfair Display',serif;font-size:1.05rem;color:var(--deep-green);margin-bottom:0.5rem}
+.biz-body{font-size:0.82rem;color:var(--warm-brown);line-height:1.7}
+.biz-tag{display:inline-block;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--light-sage);color:var(--sage);padding:0.2rem 0.6rem;border-radius:1px;margin-top:0.8rem}
+
+/* ORG CHART */
+.org-section{background:var(--fog);padding:5rem 4rem}
+.org-tree{margin-top:3rem;display:flex;flex-direction:column;align-items:center;gap:0}
+.org-row{display:flex;justify-content:center;gap:1rem;position:relative;width:100%}
+.org-node{background:var(--cream);border:1.5px solid var(--sage);padding:0.8rem 1.2rem;text-align:center;min-width:130px;position:relative}
+.org-node.ceo{background:var(--deep-green);border-color:var(--deep-green);color:var(--cream)}
+.org-node.ceo .org-role{color:var(--gold)}
+.org-name{font-size:0.8rem;font-weight:500;color:var(--deep-green)}
+.org-node.ceo .org-name{color:var(--cream)}
+.org-role{font-size:0.68rem;color:var(--sage);letter-spacing:0.05em;margin-top:0.2rem}
+.org-connector{width:2px;height:2rem;background:rgba(74,124,95,0.4);margin:0 auto}
+.org-hline{height:2px;background:rgba(74,124,95,0.3);margin:0 auto;width:70%}
+
+/* MUSIC/VIDEO */
+.media-section{padding:5rem 4rem;background:var(--deep-green)}
+.media-player{margin-top:3rem;background:rgba(250,247,240,0.04);border:1px solid rgba(250,247,240,0.1);padding:2.5rem;max-width:680px;margin-left:auto;margin-right:auto}
+.player-title{font-family:'Playfair Display',serif;font-size:1.2rem;color:var(--cream);margin-bottom:0.3rem}
+.player-sub{font-size:0.8rem;color:rgba(250,247,240,0.5);margin-bottom:1.5rem}
+.waveform{display:flex;align-items:flex-end;gap:3px;height:60px;margin-bottom:1.2rem}
+.waveform-bar{background:var(--gold);border-radius:1px;width:5px;opacity:0.7;transition:opacity 0.2s;cursor:pointer}
+.waveform-bar:hover{opacity:1}
+.player-controls{display:flex;align-items:center;gap:1.5rem}
+.play-btn{width:44px;height:44px;background:var(--gold);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+.play-btn:hover{transform:scale(1.05);background:#D4A94F}
+.progress-bar{flex:1;height:3px;background:rgba(250,247,240,0.15);border-radius:2px;position:relative;cursor:pointer}
+.progress-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.1s}
+.time-display{font-size:0.75rem;color:rgba(250,247,240,0.5);min-width:3rem;text-align:right}
+.music-tags{display:flex;gap:0.5rem;margin-top:1.2rem;flex-wrap:wrap}
+.music-tag{font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(250,247,240,0.4);border:1px solid rgba(250,247,240,0.15);padding:0.25rem 0.6rem;border-radius:1px}
+
+/* FOOTER */
+footer{background:var(--deep-green);color:rgba(250,247,240,0.5);padding:3rem 4rem;border-top:1px solid rgba(250,247,240,0.08)}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem}
+.footer-brand-name{font-family:'Playfair Display',serif;font-size:1.3rem;color:var(--cream);margin-bottom:0.5rem}
+.footer-brand-name span{color:var(--gold)}
+.footer-tagline{font-size:0.8rem;line-height:1.6;margin-bottom:1rem}
+.footer-heading{font-size:0.7rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cream);margin-bottom:1rem;font-weight:500}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:0.5rem}
+.footer-links a{font-size:0.82rem;color:rgba(250,247,240,0.5);text-decoration:none;transition:color 0.2s}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid rgba(250,247,240,0.08);font-size:0.75rem;display:flex;justify-content:space-between;align-items:center}
+
+/* SECTION DIVIDER */
+.divider{width:60px;height:2px;background:var(--gold);margin-bottom:1.5rem}
+
+/* ANIMATION */
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.floating{animation:float 5s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:0.7}50%{opacity:1}}
+.pulsing{animation:pulse 2s ease-in-out infinite}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">茗 <span>LUMINARY</span> 茶</div>
+  <ul class="nav-links">
+    <li><a href="#brand">品牌</a></li>
+    <li><a href="#products">商品</a></li>
+    <li><a href="#model">商業</a></li>
+    <li><a href="#team">團隊</a></li>
+    <li><a href="#media">影音</a></li>
+  </ul>
+  <button class="nav-cta">立即探索</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-badge">2024 台灣頂級茗茶品牌</div>
+    <h1 class="hero-title">
+      每一盞茶，<br>都是<em>一首詩</em>
+    </h1>
+    <p class="hero-subtitle">
+      LUMINARY 光燦，以台灣在地高山茶葉為魂，<br>
+      融合現代萃取工藝與東方美學哲思，<br>
+      為您獻上每一次純淨、儀式感的飲茶體驗。
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">探索商品系列</button>
+      <button class="btn-outline" onclick="document.getElementById('brand').scrollIntoView({behavior:'smooth'})">了解品牌故事</button>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <svg class="logo-svg-large floating" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+      <!-- Outer ring -->
+      <circle cx="160" cy="160" r="148" fill="none" stroke="#4A7C5F" stroke-width="1" opacity="0.3"/>
+      <circle cx="160" cy="160" r="138" fill="none" stroke="#C9A84C" stroke-width="0.5" opacity="0.5" stroke-dasharray="4 6"/>
+      <!-- Background circle -->
+      <circle cx="160" cy="160" r="130" fill="#1A3A2A"/>
+      <!-- Tea cup silhouette -->
+      <path d="M100 180 Q100 220 160 225 Q220 220 220 180 Z" fill="#4A7C5F" opacity="0.8"/>
+      <rect x="95" y="165" width="130" height="18" rx="4" fill="#4A7C5F"/>
+      <!-- Cup handle -->
+      <path d="M220 172 Q245 172 245 186 Q245 200 220 198" fill="none" stroke="#4A7C5F" stroke-width="6" stroke-linecap="round"/>
+      <!-- Steam wisps -->
+      <path d="M130 155 Q125 140 130 128 Q135 116 130 104" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+      <path d="M160 150 Q155 133 160 120 Q165 107 160 95" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity="0.9"/>
+      <path d="M190 155 Q185 140 190 128 Q195 116 190 104" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" opacity="0.8"/>
+      <!-- Tea leaf motifs around cup -->
+      <ellipse cx="80" cy="120" rx="12" ry="5" fill="#4A7C5F" opacity="0.5" transform="rotate(-40 80 120)"/>
+      <ellipse cx="240" cy="120" rx="12" ry="5" fill="#4A7C5F" opacity="0.5" transform="rotate(40 240 120)"/>
+      <ellipse cx="70" cy="200" rx="10" ry="4" fill="#4A7C5F" opacity="0.3" transform="rotate(15 70 200)"/>
+      <ellipse cx="250" cy="200" rx="10" ry="4" fill="#4A7C5F" opacity="0.3" transform="rotate(-15 250 200)"/>
+      <!-- Brand name Chinese -->
+      <text x="160" y="258" text-anchor="middle" font-family="'Playfair Display',serif" font-size="13" fill="#C9A84C" letter-spacing="8">光燦茗品</text>
+      <!-- Brand name English -->
+      <text x="160" y="278" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="rgba(250,247,240,0.5)" letter-spacing="5">LUMINARY TEA</text>
+      <!-- Top text -->
+      <text x="160" y="60" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="8" fill="rgba(201,168,76,0.6)" letter-spacing="6">EST. 2024 · TAIWAN</text>
+      <!-- Gold dots at compass points -->
+      <circle cx="160" cy="20" r="3" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="300" cy="160" r="3" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="160" cy="300" r="3" fill="#C9A84C" opacity="0.6"/>
+      <circle cx="20" cy="160" r="3" fill="#C9A84C" opacity="0.6"/>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-item">
+    <div class="stat-num">12</div>
+    <div class="stat-label">核心產品系列</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">3</div>
+    <div class="stat-label">合作茶園（海拔1200m+）</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">NT$180M</div>
+    <div class="stat-label">預估年營收目標</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">28</div>
+    <div class="stat-label">全職員工</div>
+  </div>
+</div>
+
+<!-- BRAND IDENTITY -->
+<section class="section" id="brand">
+  <div class="brand-grid">
+    <div>
+      <p class="section-badge">品牌定位</p>
+      <div class="divider"></div>
+      <h2 class="section-title">山的靈魂，<br>茶的光輝</h2>
+      <p class="section-body">LUMINARY（光燦）定位為台灣高端精品茶飲品牌，主攻 25–45 歲注重生活品質的都會消費者。我們不販售茶葉，我們出售的是儀式感、靜謐與自然療癒的生活態度。</p>
+      <br>
+      <p class="section-body">品牌核心價值：<strong>在地根源 · 職人工藝 · 極簡美學 · 可持續經營</strong></p>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div class="brand-card">
+        <h3>企業識別色系</h3>
+        <p>以深山綠為主調，金黃為點睛，暖棕為底蘊，象徵茶葉的生長、焙製與沖泡三個生命歷程。</p>
+        <div class="color-palette">
+          <div>
+            <div class="swatch" style="background:#1A3A2A"></div>
+            <div class="swatch-label">深山綠</div>
+          </div>
+          <div>
+            <div class="swatch" style="background:#4A7C5F"></div>
+            <div class="swatch-label">茶葉綠</div>
+          </div>
+          <div>
+            <div class="swatch" style="background:#C9A84C"></div>
+            <div class="swatch-label">琥珀金</div>
+          </div>
+          <div>
+            <div class="swatch" style="background:#6B4226"></div>
+            <div class="swatch-label">焙茶棕</div>
+          </div>
+          <div>
+            <div class="swatch" style="background:#FAF7F0"></div>
+            <div class="swatch-label">霧白</div>
+          </div>
+        </div>
+      </div>
+      <div class="brand-card">
+        <h3>設計理念</h3>
+        <p>字標採用 Playfair Display 配搭 Noto Serif TC，融合西方優雅與東方書韻，極簡的幾何圖章與有機茶杯線稿形成張力，傳遞「傳統與現代並存」的品牌個性。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MASCOT -->
+<section class="mascot-section">
+  <div class="mascot-visual">
+    <svg width="260" height="280" viewBox="0 0 260 280" xmlns="http://www.w3.org/2000/svg">
+      <!-- Mascot: "Misty" the Tea Panda -->
+      <!-- Body -->
+      <ellipse cx="130" cy="195" rx="68" ry="72" fill="#FAF7F0"/>
+      <!-- Head -->
+      <circle cx="130" cy="110" r="72" fill="#FAF7F0"/>
+      <!-- Ear patches -->
+      <circle cx="75" cy="55" r="22" fill="#1A3A2A"/>
+      <circle cx="185" cy="55" r="22" fill="#1A3A2A"/>
+      <circle cx="75" cy="55" r="12" fill="#4A7C5F"/>
+      <circle cx="185" cy="55" r="12" fill="#4A7C5F"/>
+      <!-- Eye patches -->
+      <ellipse cx="107" cy="105" rx="20" ry="17" fill="#2A4A3A"/>
+      <ellipse cx="153" cy="105" rx="20" ry="17" fill="#2A4A3A"/>
+      <!-- Eyes -->
+      <circle cx="107" cy="107" r="9" fill="#FAF7F0"/>
+      <circle cx="153" cy="107" r="9" fill="#FAF7F0"/>
+      <circle cx="109" cy="108" r="5" fill="#1A1A1A"/>
+      <circle cx="155" cy="108" r="5" fill="#1A1A1A"/>
+      <circle cx="111" cy="106" r="2" fill="#FAF7F0"/>
+      <circle cx="157" cy="106" r="2" fill="#FAF7F0"/>
+      <!-- Nose -->
+      <ellipse cx="130" cy="126" rx="7" ry="5" fill="#C9A84C"/>
+      <!-- Cheeks blush -->
+      <ellipse cx="88" cy="130" rx="14" ry="9" fill="#F0C8B8" opacity="0.4"/>
+      <ellipse cx="172" cy="130" rx="14" ry="9" fill="#F0C8B8" opacity="0.4"/>
+      <!-- Smile -->
+      <path d="M115 135 Q130 148 145 135" fill="none" stroke="#4A7C5F" stroke-width="2.5" stroke-linecap="round"/>
+      <!-- Tea cup in hands -->
+      <rect x="97" y="218" width="66" height="40" rx="5" fill="#4A7C5F"/>
+      <rect x="92" y="213" width="76" height="14" rx="4" fill="#1A3A2A"/>
+      <path d="M163 220 Q178 220 178 232 Q178 244 163 242" fill="none" stroke="#1A3A2A" stroke-width="5" stroke-linecap="round"/>
+      <!-- Steam from cup -->
+      <path d="M115 208 Q111 197 115 188" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M130 205 Q126 193 130 183" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+      <path d="M145 208 Q141 197 145 188" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+      <!-- Gold leaf on ear -->
+      <ellipse cx="185" cy="45" rx="8" ry="3" fill="#C9A84C" opacity="0.8" transform="rotate(30 185 45)"/>
+      <!-- Name badge -->
+      <rect x="82" y="260" width="96" height="18" rx="9" fill="#1A3A2A"/>
+      <text x="130" y="273" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="9" fill="#C9A84C" letter-spacing="2">MISTY 茗仔</text>
+    </svg>
+  </div>
+  <div>
+    <p class="section-badge">品牌吉祥物</p>
+    <div class="divider"></div>
+    <h2 class="section-title">茗仔 Misty</h2>
+    <p class="section-body">「茗仔」是一隻擁有茶葉耳朵的小熊貓，個性溫和、好奇且充滿智慧，象徵著品牌對自然的敬畏與對生活的細膩感知。</p>
+    <br>
+    <p class="section-body">Misty 的設計靈感來自台灣霧氣繚繞的高山茶園——晨霧中的寧靜與神秘，正是光燦茗品希望傳遞給每位消費者的感受。</p>
+    <br>
+    <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-top:0.5rem">
+      <span style="font-size:0.75rem;background:var(--deep-green);color:var(--gold);padding:0.3rem 0.8rem;border-radius:1px;letter-spacing:0.06em">溫和親切</span>
+      <span style="font-size:0.75rem;background:var(--deep-green);color:var(--gold);padding:0.3rem 0.8rem;border-radius:1px;letter-spacing:0.06em">熱愛自然</span>
+      <span style="font-size:0.75rem;background:var(--deep-green);color:var(--gold);padding:0.3rem 0.8rem;border-radius:1px;letter-spacing:0.06em">職人精神</span>
+      <span style="font-size:0.75rem;background:var(--deep-green);color:var(--gold);padding:0.3rem 0.8rem;border-radius:1px;letter-spacing:0.06em">台灣驕傲</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="products-section" id="products">
+  <p class="section-badge">主要營收商品</p>
+  <div class="divider" style="background:var(--gold)"></div>
+  <h2 class="section-title" style="color:var(--cream)">六大核心產品系列</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="28" width="48" height="32" rx="4" fill="#4A7C5F" opacity="0.5"/>
+        <rect x="6" y="22" width="52" height="10" rx="3" fill="#4A7C5F"/>
+        <path d="M52 28 Q64 28 64 36 Q64 44 52 43" fill="none" stroke="#4A7C5F" stroke-width="4" stroke-linecap="round"/>
+        <path d="M20 18 Q18 10 22 4" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M32 16 Q30 7 34 2" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M44 18 Q42 10 46 4" fill="none" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="product-name">光燦手採茗茶禮盒</div>
+      <div class="product-desc">精選阿里山、梨山手採高山烏龍，職人炭焙工藝，限量禮盒裝，適合饋贈與自藏。</div>
+      <div class="product-price">NT$1,280 起</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="14" y="12" width="36" height="46" rx="6" fill="none" stroke="#C9A84C" stroke-width="2"/>
+        <rect x="18" y="18" width="28" height="6" rx="2" fill="#4A7C5F" opacity="0.6"/>
+        <rect x="18" y="28" width="28" height="6" rx="2" fill="#4A7C5F" opacity="0.4"/>
+        <rect x="18" y="38" width="20" height="6" rx="2" fill="#4A7C5F" opacity="0.3"/>
+        <circle cx="44" cy="8" r="8" fill="#C9A84C"/>
+        <text x="44" y="11" text-anchor="middle" font-size="9" fill="#1A3A2A" font-weight="bold">茶</text>
+      </svg>
+      <div class="product-name">月訂茶葉訂閱方案</div>
+      <div class="product-desc">每月精選時令茶品送達府上，附品茶筆記、沖泡指南，是全年穩定的訂閱收入來源。</div>
+      <div class="product-price">NT$680 / 月</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="32" cy="48" rx="22" ry="8" fill="#4A7C5F" opacity="0.3"/>
+        <path d="M14 20 Q14 48 32 52 Q50 48 50 20 Z" fill="#4A7C5F" opacity="0.5"/>
+        <path d="M14 20 Q14 14 32 14 Q50 14 50 20" fill="none" stroke="#C9A84C" stroke-width="2"/>
+        <ellipse cx="32" cy="20" rx="18" ry="6" fill="none" stroke="#C9A84C" stroke-width="1.5"/>
+        <path d="M22 30 Q32 42 42 30" fill="none" stroke="#FAF7F0" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <div class="product-name">精製茶湯冷萃瓶裝</div>
+      <div class="product-desc">以36小時低溫冷萃技術製作，鎖住茶葉精華，無添加、無防腐劑的即飲高端瓶裝茶飲。</div>
+      <div class="product-price">NT$95 / 瓶</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="10" y="10" width="20" height="28" rx="3" fill="#4A7C5F" opacity="0.6"/>
+        <rect x="34" y="10" width="20" height="28" rx="3" fill="#1A3A2A" opacity="0.8"/>
+        <rect x="10" y="42" width="44" height="12" rx="3" fill="#C9A84C" opacity="0.7"/>
+        <circle cx="20" cy="24" r="5" fill="#C9A84C" opacity="0.8"/>
+        <path d="M38 18 L50 18 M38 24 L50 24 M38 30 L46 30" stroke="#4A7C5F" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div class="product-name">茶道美學器皿組</div>
+      <div class="product-desc">與台灣陶藝家聯名合作的手製茶壺、茶杯、茶盤套組，融合日式侘寂與台灣在地土感。</div>
+      <div class="product-price">NT$3,200 起</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="24" fill="none" stroke="#4A7C5F" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <circle cx="32" cy="32" r="16" fill="#1A3A2A" opacity="0.7"/>
+        <text x="32" y="29" text-anchor="middle" font-size="8" fill="#C9A84C">茶</text>
+        <text x="32" y="40" text-anchor="middle" font-size="7" fill="rgba(250,247,240,0.6)" font-family="sans-serif">COURSE</text>
+        <path d="M8 32 Q32 8 56 32" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+      <div class="product-name">光燦茶道體驗課程</div>
+      <div class="product-desc">線上與線下並行，從茶葉識別、歷史沿革到手沖美學，由品牌茶藝師親授，全年開課。</div>
+      <div class="product-price">NT$2,800 / 課程</div>
+    </div>
+    <div class="product-card">
+      <svg class="product-icon" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+        <rect x="8" y="14" width="48" height="36" rx="5" fill="#1A3A2A" opacity="0.8"/>
+        <rect x="12" y="18" width="40" height="28" rx="3" fill="#4A7C5F" opacity="0.3"/>
+        <path d="M20 32 L28 24 L36 30 L44 22" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="20" cy="32" r="2" fill="#C9A84C"/>
+        <circle cx="28" cy="24" r="2" fill="#C9A84C"/>
+        <circle cx="36" cy="30" r="2" fill="#C9A84C"/>
+        <circle cx="44" cy="22" r="2" fill="#C9A84C"/>
+        <rect x="20" y="52" width="24" height="4" rx="2" fill="#4A7C5F"/>
+        <rect x="26" y="50" width="12" height="4" rx="2" fill="#4A7C5F"/>
+      </svg>
+      <div class="product-name">企業茶禮定製服務</div>
+      <div class="product-desc">為企業客戶打造專屬品牌包裝的定製茶禮，提供OEM/ODM服務，B2B高利潤收入來源。</div>
+      <div class="product-price">報價服務</div>
+    </div>
+  </div>
+</section>
+
+<!-- BUSINESS MODEL -->
+<section class="biz-section" id="model">
+  <p class="section-badge">商業模式</p>
+  <div class="divider"></div>
+  <h2 class="section-title">多元收益，可持續成長</h2>
+  <div class="biz-grid">
+    <div class="biz-card">
+      <div class="biz-num">01</div>
+      <div class="biz-title">D2C 電商直銷</div>
+      <div class="biz-body">自有官網與 LINE 購物為主要通路，掌握消費者數據，避免中間商抽成，提升品牌溢價能力。</div>
+      <span class="biz-tag">主要收入 65%</span>
+    </div>
+    <div class="biz-card">
+      <div class="biz-num">02</div>
+      <div class="biz-title">訂閱制月茶方案</div>
+      <div class="biz-body">每月固定訂閱收入，降低庫存風險，建立穩定現金流，消費者留存率目標 72% 以上。</div>
+      <span class="biz-tag">可預期收入 18%</span>
+    </div>
+    <div class="biz-card">
+      <div class="biz-num">03</div>
+      <div class="biz-title">B2B 企業禮贈</div>
+      <div class="biz-body">瞄準科技公司、金融機構、法律事務所的年節禮品採購需求，單筆訂單金額大，利潤高。</div>
+      <span class="biz-tag">高利潤通路 10%</span>
+    </div>
+    <div class="biz-card">
+      <div class="biz-num">04</div>
+      <div class="biz-title">課程與體驗經濟</div>
+      <div class="biz-body">線上課程平台授權、線下茶道工作坊、企業包場體驗，為品牌注入文化深度與附加價值。</div>
+      <span class="biz-tag">品牌溢價 7%</span>
+    </div>
+  </div>
+</section>
+
+<!-- ORG CHART -->
+<section class="org-section" id="team">
+  <p class="section-badge">組織架構</p>
+  <div class="divider"></div>
+  <h2 class="section-title">精實高效的28人團隊</h2>
+  <div class="org-tree">
+    <div class="org-row">
+      <div class="org-node ceo">
+        <div class="org-name">紀宇珩</div>
+        <div class="org-role">創辦人 / CEO</div>
+      </div>
+    </div>
+    <div class="org-connector"></div>
+    <div class="org-hline"></div>
+    <div class="org-connector" style="width:70%;display:flex;justify-content:space-between;height:1px;background:transparent;gap:0">
+    </div>
+    <div style="display:flex;justify-content:center;gap:1.5rem;width:100%;position:relative">
+      <div style="position:absolute;top:0;left:15%;right:15%;height:2px;background:rgba(74,124,95,0.3)"></div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div style="width:2px;height:1.5rem;background:rgba(74,124,95,0.4)"></div>
+        <div class="org-node">
+          <div class="org-name">張凱翔</div>
+          <div class="org-role">CMO 行銷長</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div style="width:2px;height:1.5rem;background:rgba(74,124,95,0.4)"></div>
+        <div class="org-node">
+          <div class="org-name">莊名均</div>
+          <div class="org-role">COO 營運長</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div style="width:2px;height:1.5rem;background:rgba(74,124,95,0.4)"></div>
+        <div class="org-node">
+          <div class="org-name">曾羽澤</div>
+          <div class="org-role">CTO 技術長</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center">
+        <div style="width:2px;height:1.5rem;background:rgba(74,124,95,0.4)"></div>
+        <div class="org-node">
+          <div class="org-name">AAA</div>
+          <div class="org-role">茶藝總監</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:1rem;display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;width:100%;max-width:680px">
+      <div style="font-size:0.72rem;color:var(--sage);border-top:1px solid rgba(74,124,95,0.25);padding-top:0.6rem;padding-left:0.3rem">品牌設計 × 2<br>社群行銷 × 3<br>KOL合作 × 1</div>
+      <div style="font-size:0.72rem;color:var(--sage);border-top:1px solid rgba(74,124,95,0.25);padding-top:0.6rem;padding-left:0.3rem">物流倉儲 × 3<br>客服品管 × 2<br>B2B業務 × 2</div>
+      <div style="font-size:0.72rem;color:var(--sage);border-top:1px solid rgba(74,124,95,0.25);padding-top:0.6rem;padding-left:0.3rem">全端工程 × 2<br>資料分析 × 1<br>平台維護 × 1</div>
+      <div style="font-size:0.72rem;color:var(--sage);border-top:1px solid rgba(74,124,95,0.25);padding-top:0.6rem;padding-left:0.3rem">產品研發 × 3<br>茶園聯絡 × 1<br>課程教師 × 2</div>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA / MUSIC -->
+<section class="media-section" id="media">
+  <p class="section-badge" style="color:var(--gold)">品牌影音</p>
+  <div class="divider" style="background:var(--gold)"></div>
+  <h2 class="section-title" style="color:var(--cream)">企業形象配樂</h2>
+  <p class="section-body" style="color:rgba(250,247,240,0.6);max-width:50ch">以下為使用 Suno AI 創作的品牌主題曲《霧中茗光》，融合台灣傳統器樂與現代氛圍電子音景，作為企業形象影片配樂。</p>
+
+  <div class="media-player">
+    <div class="player-title">霧中茗光 — Mist & Luminance</div>
+    <div class="player-sub">品牌形象主題曲 · 由 Suno AI 生成 · 3:24</div>
+    <div class="waveform" id="waveform"></div>
+    <div class="player-controls">
+      <button class="play-btn" id="playBtn" onclick="togglePlay()">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <polygon id="playIcon" points="6,3 15,9 6,15" fill="#1A3A2A"/>
+          <rect id="pauseIcon" x="4" y="3" width="4" height="12" rx="1" fill="#1A3A2A" style="display:none"/>
+          <rect id="pauseIcon2" x="10" y="3" width="4" height="12" rx="1" fill="#1A3A2A" style="display:none"/>
+        </svg>
+      </button>
+      <div class="progress-bar" onclick="seekTo(event)">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="time-display" id="timeDisplay">0:00</div>
+    </div>
+    <div class="music-tags">
+      <span class="music-tag">Ambient Folk</span>
+      <span class="music-tag">台灣傳統器樂</span>
+      <span class="music-tag">Suno AI</span>
+      <span class="music-tag">氛圍電子</span>
+      <span class="music-tag">品牌配樂</span>
+    </div>
+  </div>
+
+  <div style="margin-top:2rem;background:rgba(250,247,240,0.04);border:1px solid rgba(250,247,240,0.1);padding:2rem;max-width:680px;margin-left:auto;margin-right:auto">
+    <p style="font-size:0.8rem;color:rgba(250,247,240,0.5);margin-bottom:1rem;letter-spacing:0.06em;text-transform:uppercase;font-size:0.68rem">Suno AI 生成提示詞</p>
+    <p style="font-family:'Noto Serif TC',serif;font-size:0.85rem;color:rgba(250,247,240,0.7);line-height:1.9">"Serene ambient music blending traditional Taiwanese erhu and guqin with soft electronic pads, slow tempo 68BPM, misty mountain morning atmosphere, minimalist piano motif, gentle bamboo flute, suitable for premium tea brand film, warm and contemplative, inspired by high-altitude tea gardens in Alishan, meditative and grounded"</p>
+    <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(250,247,240,0.08);font-size:0.75rem;color:rgba(250,247,240,0.35)">企業形象影片方向：清晨茶農採茶、炭焙工序、都市職人靜謐品茶，以慢鏡頭搭配此音景，強化「慢活、品味、在地」的核心訴求。</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand-name">茗 <span>LUMINARY</span> 茶</div>
+      <div class="footer-tagline">以台灣高山茶葉為魂，<br>為現代生活注入東方儀式感。</div>
+      <div style="font-size:0.75rem">台灣 · 台北市信義區茗品路 88 號</div>
+    </div>
+    <div>
+      <div class="footer-heading">品牌</div>
+      <ul class="footer-links">
+        <li><a href="#">品牌故事</a></li>
+        <li><a href="#">茶園溯源</a></li>
+        <li><a href="#">永續承諾</a></li>
+        <li><a href="#">媒體報導</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">商品</div>
+      <ul class="footer-links">
+        <li><a href="#">禮盒系列</a></li>
+        <li><a href="#">訂閱方案</a></li>
+        <li><a href="#">冷萃茶飲</a></li>
+        <li><a href="#">器皿選物</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">服務</div>
+      <ul class="footer-links">
+        <li><a href="#">茶道課程</a></li>
+        <li><a href="#">企業定製</a></li>
+        <li><a href="#">加盟合作</a></li>
+        <li><a href="#">聯絡我們</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 光燦茗品股份有限公司 LUMINARY TEA CO., LTD. All Rights Reserved.</span>
+    <span>以生成式 AI 協助建立之虛擬公司示範</span>
+  </div>
+</footer>
+
+<script>
+// Waveform generation
+const waveform = document.getElementById('waveform');
+const heights = [18,25,32,28,42,38,22,48,44,36,52,58,45,38,32,55,62,50,42,36,28,44,52,48,38,32,45,56,44,38,32,28,42,50,46,38,30,44,52,48,36,28,40,52,46,36,30,25,38,44,50,42,32,28,36,48,54,46,38,30,22,36,44,40];
+heights.forEach((h,i)=>{
+  const bar = document.createElement('div');
+  bar.className='waveform-bar';
+  bar.style.height=h+'px';
+  bar.style.flex='1';
+  bar.style.opacity = i < 20 ? '1' : '0.4';
+  if(i<20) bar.style.background='#C9A84C';
+  waveform.appendChild(bar);
+});
+
+// Player simulation
+let playing = false;
+let progress = 0;
+let timer = null;
+const totalSeconds = 204;
+
+function togglePlay(){
+  playing = !playing;
+  const pi = document.getElementById('playIcon');
+  const pa = document.getElementById('pauseIcon');
+  const pb = document.getElementById('pauseIcon2');
+  if(playing){
+    pi.style.display='none'; pa.style.display='block'; pb.style.display='block';
+    timer = setInterval(tick, 500);
+  } else {
+    pi.style.display='block'; pa.style.display='none'; pb.style.display='none';
+    clearInterval(timer);
+  }
+}
+
+function tick(){
+  progress = Math.min(progress + (0.5/totalSeconds)*100, 100);
+  document.getElementById('progressFill').style.width = progress+'%';
+  const sec = Math.round((progress/100)*totalSeconds);
+  const m = Math.floor(sec/60);
+  const s = sec%60;
+  document.getElementById('timeDisplay').textContent = m+':'+(s<10?'0':'')+s;
+  // Update waveform visual
+  const bars = waveform.querySelectorAll('.waveform-bar');
+  const activeBars = Math.round((progress/100)*bars.length);
+  bars.forEach((b,i)=>{
+    b.style.opacity = i<activeBars ? '1' : '0.4';
+    b.style.background = i<activeBars ? '#C9A84C' : 'rgba(201,168,76,0.4)';
+  });
+  if(progress >= 100) { clearInterval(timer); playing=false; }
+}
+
+function seekTo(e){
+  const rect = e.currentTarget.getBoundingClientRect();
+  progress = ((e.clientX - rect.left)/rect.width)*100;
+  document.getElementById('progressFill').style.width = progress+'%';
+}
+
+// Smooth scroll for nav
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if(target) target.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
